@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Стиль Воспитания | Стержень</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --warm: #e8d5b0;
+    --gold: #c9a84c;
+    --rust: #c4622d;
+    --sage: #5a7a5a;
+    --sky: #4a7fa5;
+    --paper: #faf6ef;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .bg-pattern {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: radial-gradient(circle at 20% 20%, rgba(201,168,76,0.08) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 80%, rgba(196,98,45,0.06) 0%, transparent 50%);
+  }
+
+  .container {
+    position: relative; z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 40px 0 32px;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    margin-bottom: 32px;
+  }
+
+  .brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 6vw, 44px);
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .header p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.7;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* PROGRESS */
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(26,26,46,0.1);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--rust));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .progress-text {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 2px 30px rgba(26,26,46,0.07);
+    margin-bottom: 24px;
+    animation: slideIn 0.35s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-number {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(17px, 4vw, 21px);
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 18px;
+    border: 2px solid rgba(26,26,46,0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: white;
+    text-align: left;
+    width: 100%;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .option:hover {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .option.selected {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.1);
+  }
+
+  .option-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid rgba(26,26,46,0.2);
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .option.selected .option-dot {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .option.selected .option-dot::after {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: white;
+  }
+
+  .option-text {
+    font-size: 15px;
+    line-height: 1.55;
+    color: #333;
+  }
+
+  /* NAV BUTTONS */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .btn {
+    padding: 14px 32px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-prev {
+    background: transparent;
+    border: 2px solid rgba(26,26,46,0.15);
+    color: #777;
+  }
+
+  .btn-prev:hover { border-color: var(--gold); color: var(--gold); }
+
+  .btn-next {
+    background: var(--ink);
+    color: white;
+    margin-left: auto;
+  }
+
+  .btn-next:hover { background: var(--gold); transform: translateY(-1px); }
+  .btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  .btn-result {
+    background: linear-gradient(135deg, var(--gold), var(--rust));
+    color: white;
+    padding: 16px 40px;
+    font-size: 16px;
+    border-radius: 14px;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .btn-result:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.35); }
+
+  /* RESULT */
+  .result-section { display: none; animation: slideIn 0.4s ease; }
+
+  .result-badge {
+    text-align: center;
+    padding: 40px 32px 32px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 30px rgba(26,26,46,0.07);
+    margin-bottom: 24px;
+  }
+
+  .result-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .result-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 6vw, 38px);
+    font-weight: 900;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .result-tagline {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* BARS */
+  .scores-wrap {
+    background: white;
+    border-radius: 20px;
+    padding: 28px 32px;
+    box-shadow: 0 2px 30px rgba(26,26,46,0.07);
+    margin-bottom: 24px;
+  }
+
+  .scores-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+
+  .score-row {
+    margin-bottom: 16px;
+  }
+
+  .score-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #444;
+  }
+
+  .score-bar-bg {
+    height: 8px;
+    background: rgba(26,26,46,0.07);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease 0.3s;
+  }
+
+  /* INFO CARDS */
+  .info-card {
+    background: white;
+    border-radius: 20px;
+    padding: 28px 32px;
+    box-shadow: 0 2px 30px rgba(26,26,46,0.07);
+    margin-bottom: 24px;
+  }
+
+  .info-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .info-card p, .info-card li {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #444;
+  }
+
+  .info-card ul {
+    padding-left: 20px;
+  }
+
+  .info-card li { margin-bottom: 6px; }
+
+  .consequences-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .con-item {
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .con-item.neg { background: rgba(196,98,45,0.07); border-left: 3px solid var(--rust); }
+  .con-item.pos { background: rgba(90,122,90,0.07); border-left: 3px solid var(--sage); }
+
+  /* ALL STYLES BLOCK */
+  .all-styles {
+    background: white;
+    border-radius: 20px;
+    padding: 28px 32px;
+    box-shadow: 0 2px 30px rgba(26,26,46,0.07);
+    margin-bottom: 24px;
+  }
+
+  .style-item {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(26,26,46,0.07);
+  }
+
+  .style-item:last-child { border-bottom: none; }
+
+  .style-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .style-emoji { font-size: 28px; }
+
+  .style-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .style-desc {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+
+  .tag-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .tag {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .tag-neg { background: rgba(196,98,45,0.1); color: var(--rust); }
+  .tag-pos { background: rgba(90,122,90,0.1); color: var(--sage); }
+  .tag-neu { background: rgba(74,127,165,0.1); color: var(--sky); }
+
+  /* CTA */
+  .cta-card {
+    background: linear-gradient(135deg, var(--ink) 0%, #2d2d4e 100%);
+    border-radius: 20px;
+    padding: 36px 32px;
+    text-align: center;
+    color: white;
+    margin-bottom: 24px;
+  }
+
+  .cta-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 5vw, 28px);
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+
+  .cta-card p {
+    font-size: 15px;
+    line-height: 1.7;
+    opacity: 0.8;
+    margin-bottom: 24px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-card .btn-cta {
+    display: inline-block;
+    padding: 16px 40px;
+    background: linear-gradient(135deg, var(--gold), var(--rust));
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .cta-card .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.4); }
+
+  .btn-restart {
+    background: transparent;
+    border: 2px solid rgba(26,26,46,0.15);
+    color: #888;
+    padding: 12px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.2s;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .btn-restart:hover { border-color: var(--gold); color: var(--gold); }
+
+  @media (max-width: 500px) {
+    .consequences-grid { grid-template-columns: 1fr; }
+    .question-card { padding: 24px 20px; }
+    .info-card, .scores-wrap, .all-styles, .cta-card { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="bg-pattern"></div>
+
+<div class="container">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="brand">Стержень · Тест</div>
+    <h1>Какой ты родитель?</h1>
+    <p>12 коротких ситуаций — и ты узнаешь свой стиль воспитания, его последствия и что с этим делать</p>
+  </div>
+
+  <!-- QUIZ SECTION -->
+  <div id="quizSection">
+    <div class="progress-wrap">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <div class="progress-text" id="progressText">0 / 12</div>
+    </div>
+
+    <div class="question-card" id="questionCard">
+      <div class="q-number" id="qNumber"></div>
+      <div class="q-text" id="qText"></div>
+      <div class="options" id="optionsWrap"></div>
+    </div>
+
+    <div class="nav-buttons">
+      <button class="btn btn-prev" id="btnPrev" onclick="prevQ()">← Назад</button>
+      <button class="btn btn-next" id="btnNext" onclick="nextQ()" disabled>Далее →</button>
+    </div>
+  </div>
+
+  <!-- RESULT SECTION -->
+  <div class="result-section" id="resultSection">
+
+    <div class="result-badge">
+      <span class="result-icon" id="resultIcon"></span>
+      <div class="result-title">Твой стиль воспитания</div>
+      <div class="result-name" id="resultName"></div>
+      <div class="result-tagline" id="resultTagline"></div>
+    </div>
+
+    <div class="scores-wrap">
+      <div class="scores-title">Распределение стилей</div>
+      <div id="scoresContent"></div>
+    </div>
+
+    <div class="info-card" id="descCard">
+      <h3 id="descTitle"></h3>
+      <p id="descText"></p>
+    </div>
+
+    <div class="info-card">
+      <h3>⚡ Последствия для ребёнка</h3>
+      <div class="consequences-grid" id="consequencesGrid"></div>
+    </div>
+
+    <div class="all-styles">
+      <h3 style="font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--ink);margin-bottom:20px;">Все 4 стиля — кратко</h3>
+      <div class="style-item">
+        <div class="style-header"><span class="style-emoji">⚡</span><span class="style-name">Авторитарный</span></div>
+        <div class="style-desc">Строгие правила, мало тепла. "Я сказал — значит так". Высокий контроль, низкая поддержка. Дети слушаются, но из страха, а не из понимания.</div>
+        <div class="tag-wrap">
+          <span class="tag tag-neg">Тревожность</span>
+          <span class="tag tag-neg">Подавленность</span>
+          <span class="tag tag-neg">Бунт в подростковом</span>
+          <span class="tag tag-neu">Дисциплина</span>
+        </div>
+      </div>
+      <div class="style-item">
+        <div class="style-header"><span class="style-emoji">🌊</span><span class="style-name">Попустительский</span></div>
+        <div class="style-desc">Всё разрешено, мало границ. "Главное — счастье ребёнка". Много тепла, но без структуры. Дети не умеют справляться с отказами.</div>
+        <div class="tag-wrap">
+          <span class="tag tag-neg">Импульсивность</span>
+          <span class="tag tag-neg">Неустойчивость</span>
+          <span class="tag tag-neg">Трудности с ограничениями</span>
+          <span class="tag tag-neu">Открытость</span>
+        </div>
+      </div>
+      <div class="style-item">
+        <div class="style-header"><span class="style-emoji">🌫️</span><span class="style-name">Отстранённый</span></div>
+        <div class="style-desc">Ни тепла, ни структуры. Ребёнок предоставлен сам себе. Родитель занят, устал или просто не вовлечён. Самый тяжёлый сценарий для развития.</div>
+        <div class="tag-wrap">
+          <span class="tag tag-neg">Низкая самооценка</span>
+          <span class="tag tag-neg">Привязанность нарушена</span>
+          <span class="tag tag-neg">Риск девиантного поведения</span>
+        </div>
+      </div>
+      <div class="style-item">
+        <div class="style-header"><span class="style-emoji">🌳</span><span class="style-name">Авторитетный</span></div>
+        <div class="style-desc">Тепло + структура. "Я тебя слышу, и при этом есть границы". Объясняет причины, выслушивает, держит рамки. Доказанная наукой модель.</div>
+        <div class="tag-wrap">
+          <span class="tag tag-pos">Уверенность</span>
+          <span class="tag tag-pos">Эмоциональный интеллект</span>
+          <span class="tag tag-pos">Самостоятельность</span>
+          <span class="tag tag-pos">Устойчивость</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-card">
+      <h3>Следующий шаг: практики перехода к авторитетному стилю</h3>
+      <p>В следующих постах я разберу конкретные техники — как перейти к авторитетному воспитанию шаг за шагом, без чувства вины и с учётом реальной жизни</p>
+      <a href="https://t.me/futurereadykids" target="_blank" class="btn btn-cta" style="text-decoration:none;display:inline-block;">📢 Подписаться на канал</a>
+    </div>
+
+    <button class="btn-restart" onclick="restart()">↺ Пройти тест заново</button>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {
+    text: "Ребёнок получил плохую оценку. Твоя первая реакция?",
+    options: [
+      { text: "Лишаю телефона или других удовольствий до исправления.", type: "A" },
+      { text: "Спрашиваю, что случилось, и вместе разбираемся в чём проблема.", type: "D" },
+      { text: "Говорю: «Ничего страшного, в следующий раз лучше».", type: "P" },
+      { text: "Замечаю краем глаза — слишком занят своими делами.", type: "N" },
+    ]
+  },
+  {
+    text: "Ребёнок просит задержаться у друга допоздна. Как реагируешь?",
+    options: [
+      { text: "Нет — сказал в 20:00, значит в 20:00.", type: "A" },
+      { text: "Пусть остаётся, главное чтобы ему было хорошо.", type: "P" },
+      { text: "Обсуждаем: спрашиваю о родителях друга, договариваемся о времени.", type: "D" },
+      { text: "Ладно, как хочешь — мне сейчас некогда разбираться.", type: "N" },
+    ]
+  },
+  {
+    text: "Ребёнок устроил истерику в магазине. Ты...",
+    options: [
+      { text: "Резко осаживаю, выхожу. Нечего позориться на людях.", type: "A" },
+      { text: "Покупаю что просит — лишь бы успокоился.", type: "P" },
+      { text: "Присаживаюсь, называю его чувства, спокойно объясняю границы.", type: "D" },
+      { text: "Отхожу и жду. Пусть само как-нибудь рассосётся.", type: "N" },
+    ]
+  },
+  {
+    text: "Как у вас дома принимаются правила?",
+    options: [
+      { text: "Я устанавливаю — они выполняют. Обсуждений нет.", type: "A" },
+      { text: "Правил почти нет — зачем давить на ребёнка.", type: "P" },
+      { text: "Обсуждаем вместе, объясняю зачем каждое правило.", type: "D" },
+      { text: "Теоретически они есть... но никто особо не следит.", type: "N" },
+    ]
+  },
+  {
+    text: "Ребёнок поспорил с тобой. Что происходит?",
+    options: [
+      { text: "Не смей возражать старшим. Сделай и не рассуждай.", type: "A" },
+      { text: "Выслушиваю, и если у него есть аргументы — могу пересмотреть решение.", type: "D" },
+      { text: "Соглашаюсь почти сразу — не хочу конфликта.", type: "P" },
+      { text: "Мне некогда спорить. Делай что хочешь.", type: "N" },
+    ]
+  },
+  {
+    text: "Как ты реагируешь на успехи ребёнка?",
+    options: [
+      { text: "Говорю что можно было лучше. Не хочу, чтоб зазнался.", type: "A" },
+      { text: "Бурно хвалю всегда — он должен чувствовать себя лучшим.", type: "P" },
+      { text: "Хвалю конкретно за усилие, задаю вопросы о процессе.", type: "D" },
+      { text: "Иногда замечаю, иногда нет — зависит от моей занятости.", type: "N" },
+    ]
+  },
+  {
+    text: "Ребёнок не хочет делать домашнее задание. Ты...",
+    options: [
+      { text: "Сядь и делай. Я сказал.", type: "A" },
+      { text: "Ладно, потом сделаешь. Или не сделаешь — учитель разберётся.", type: "N" },
+      { text: "Ну ладно, на сегодня хватит. Хочешь мультик?", type: "P" },
+      { text: "Узнаю почему не хочет, помогаю организовать процесс, держу договорённость.", type: "D" },
+    ]
+  },
+  {
+    text: "Как часто вы разговариваете о чувствах и эмоциях?",
+    options: [
+      { text: "Почти никогда — это не принято в нашей семье.", type: "A" },
+      { text: "Когда он в чём-то нуждается — я всегда рядом.", type: "P" },
+      { text: "Регулярно — я называю свои чувства и учу его делать то же самое.", type: "D" },
+      { text: "Крайне редко — у нас у всех своя жизнь.", type: "N" },
+    ]
+  },
+  {
+    text: "Ребёнок хочет попробовать что-то новое (секцию, хобби). Реакция?",
+    options: [
+      { text: "Сам решаю что ему нужно — я лучше знаю.", type: "A" },
+      { text: "Разрешаю любой ценой, даже если это неудобно и дорого.", type: "P" },
+      { text: "Обсуждаем — интересуюсь почему хочет, оцениваем реально вместе.", type: "D" },
+      { text: "Пусть сам разбирается, я не буду вмешиваться.", type: "N" },
+    ]
+  },
+  {
+    text: "Ребёнок сделал что-то плохое — соврал или обидел кого-то. Ты...",
+    options: [
+      { text: "Жёстко наказываю. Пусть запомнит на всю жизнь.", type: "A" },
+      { text: "Сильно расстраиваюсь, но быстро прощаю — он же ребёнок.", type: "P" },
+      { text: "Спрашиваю что произошло, объясняю последствия, вместе думаем как исправить.", type: "D" },
+      { text: "Узнаю краем уха и не особо реагирую.", type: "N" },
+    ]
+  },
+  {
+    text: "Как выглядит обычный вечер с ребёнком?",
+    options: [
+      { text: "Проверяю уроки, режим соблюдается — всё по расписанию.", type: "A" },
+      { text: "Делаем что он хочет — я стараюсь угодить.", type: "P" },
+      { text: "Каждый занят своим, почти не пересекаемся.", type: "N" },
+      { text: "Есть ритуалы: ужин вместе, разговор, иногда игра — и чёткий отход ко сну.", type: "D" },
+    ]
+  },
+  {
+    text: "Как бы ребёнок описал тебя другу?",
+    options: [
+      { text: "«Строгий, лучше не злить»", type: "A" },
+      { text: "«Добрый, всегда всё разрешает»", type: "P" },
+      { text: "«Занятой, почти не бывает»", type: "N" },
+      { text: "«Строгий, но справедливый — и всегда выслушает»", type: "D" },
+    ]
+  }
+];
+
+const styles = {
+  A: {
+    name: "Авторитарный родитель",
+    icon: "⚡",
+    tagline: "Ты держишь высокую планку и ценишь порядок. Дисциплина — твой конёк. Но иногда это обходится дорогой ценой — за послушанием теряется связь.",
+    color: "#c4622d",
+    desc_title: "💡 Что это значит",
+    desc: "Авторитарный стиль — это высокий контроль при низкой эмоциональной близости. Ты ставишь чёткие требования и ожидаешь выполнения без объяснений. Ты хочешь лучшего для ребёнка — но методы могут работать против цели.",
+    consequences: [
+      { type: "neg", text: "Тревожность и страх ошибки" },
+      { type: "neg", text: "Подавление инициативы" },
+      { type: "neg", text: "Взрыв в подростковом возрасте" },
+      { type: "neg", text: "Трудности с самооценкой" },
+      { type: "pos", text: "Высокая дисциплина" },
+      { type: "pos", text: "Понимание границ" },
+    ]
+  },
+  P: {
+    name: "Попустительский родитель",
+    icon: "🌊",
+    tagline: "Ты очень любишь ребёнка и хочешь, чтобы он был счастлив. Это прекрасно. Но счастье без границ — это иллюзия, которая рушится при первом столкновении с реальностью.",
+    color: "#4a7fa5",
+    desc_title: "💡 Что это значит",
+    desc: "Попустительский стиль — много тепла, мало структуры. Ты боишься обидеть, разочаровать или навредить. Но именно границы дают детям безопасность и учат справляться с жизнью.",
+    consequences: [
+      { type: "neg", text: "Импульсивность и нетерпение" },
+      { type: "neg", text: "Неумение принимать «нет»" },
+      { type: "neg", text: "Трудности с мотивацией" },
+      { type: "neg", text: "Манипулятивное поведение" },
+      { type: "pos", text: "Эмоциональная открытость" },
+      { type: "pos", text: "Хороший контакт с родителем" },
+    ]
+  },
+  N: {
+    name: "Отстранённый родитель",
+    icon: "🌫️",
+    tagline: "Ты занят. Устал. Или просто не знаешь как. Это случается. Но ребёнок читает твоё отсутствие как послание — и это послание важно изменить.",
+    color: "#888",
+    desc_title: "💡 Что это значит",
+    desc: "Отстранённый стиль — ни тепла, ни структуры. Часто это следствие собственных незалеченных ран, выгорания или отсутствия примера. Хорошая новость: это самый исправляемый стиль — достаточно начать присутствовать.",
+    consequences: [
+      { type: "neg", text: "Нарушение привязанности" },
+      { type: "neg", text: "Низкая самооценка" },
+      { type: "neg", text: "Риск асоциального поведения" },
+      { type: "neg", text: "Тревога и одиночество" },
+      { type: "neg", text: "Трудности в отношениях" },
+      { type: "pos", text: "Самостоятельность как способ выживания" },
+    ]
+  },
+  D: {
+    name: "Авторитетный родитель",
+    icon: "🌳",
+    tagline: "Ты уже делаешь главное — держишь баланс между теплом и структурой. Это подтверждённый наукой путь. Продолжай и углубляй.",
+    color: "#5a7a5a",
+    desc_title: "💡 Что это значит",
+    desc: "Авторитетный стиль — это высокое тепло + высокая структура. Ты объясняешь причины, слышишь ребёнка и держишь границы. Исследования Диaны Баумринд и сотни последующих подтверждают: это лучший предиктор психологически здоровой взрослой личности.",
+    consequences: [
+      { type: "pos", text: "Уверенность в себе" },
+      { type: "pos", text: "Высокий эмоциональный интеллект" },
+      { type: "pos", text: "Устойчивость к стрессу" },
+      { type: "pos", text: "Хорошие социальные навыки" },
+      { type: "pos", text: "Внутренняя мотивация" },
+      { type: "pos", text: "Крепкая связь с родителем" },
+    ]
+  }
+};
+
+let current = 0;
+let answers = new Array(questions.length).fill(null);
+
+function renderQ() {
+  const q = questions[current];
+  document.getElementById('qNumber').textContent = `Вопрос ${current + 1} из ${questions.length}`;
+  document.getElementById('qText').textContent = q.text;
+
+  const wrap = document.getElementById('optionsWrap');
+  wrap.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option' + (answers[current] === i ? ' selected' : '');
+    btn.innerHTML = `<div class="option-dot"></div><div class="option-text">${opt.text}</div>`;
+    btn.onclick = () => selectOption(i);
+    wrap.appendChild(btn);
+  });
+
+  const pct = (current / questions.length) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${current} / ${questions.length}`;
+  document.getElementById('btnPrev').style.visibility = current > 0 ? 'visible' : 'hidden';
+  document.getElementById('btnNext').disabled = answers[current] === null;
+
+  if (current === questions.length - 1) {
+    document.getElementById('btnNext').textContent = 'Узнать результат →';
+  } else {
+    document.getElementById('btnNext').textContent = 'Далее →';
+  }
+
+  // Animate
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = 'slideIn 0.35s ease';
+}
+
+function selectOption(i) {
+  answers[current] = i;
+  document.querySelectorAll('.option').forEach((el, idx) => {
+    el.classList.toggle('selected', idx === i);
+  });
+  document.getElementById('btnNext').disabled = false;
+}
+
+function nextQ() {
+  if (answers[current] === null) return;
+  if (current < questions.length - 1) {
+    current++;
+    renderQ();
+  } else {
+    showResult();
+  }
+}
+
+function prevQ() {
+  if (current > 0) { current--; renderQ(); }
+}
+
+function showResult() {
+  // Count scores
+  const counts = { A: 0, P: 0, N: 0, D: 0 };
+  answers.forEach((ans, qi) => {
+    if (ans !== null) {
+      const type = questions[qi].options[ans].type;
+      counts[type]++;
+    }
+  });
+
+  // Find dominant
+  const dominant = Object.entries(counts).sort((a,b) => b[1]-a[1])[0][0];
+  const style = styles[dominant];
+
+  document.getElementById('resultIcon').textContent = style.icon;
+  document.getElementById('resultName').textContent = style.name;
+  document.getElementById('resultTagline').textContent = style.tagline;
+
+  // Scores bars
+  const styleLabels = { A: 'Авторитарный ⚡', P: 'Попустительский 🌊', N: 'Отстранённый 🌫️', D: 'Авторитетный 🌳' };
+  const styleColors = { A: '#c4622d', P: '#4a7fa5', N: '#aaa', D: '#5a7a5a' };
+  const total = questions.length;
+  let scoresHTML = '';
+  ['D','A','P','N'].forEach(k => {
+    const pct = Math.round((counts[k] / total) * 100);
+    scoresHTML += `
+      <div class="score-row">
+        <div class="score-label"><span>${styleLabels[k]}</span><span>${pct}%</span></div>
+        <div class="score-bar-bg"><div class="score-bar-fill" style="width:${pct}%;background:${styleColors[k]}"></div></div>
+      </div>`;
+  });
+  document.getElementById('scoresContent').innerHTML = scoresHTML;
+
+  // Description
+  document.getElementById('descTitle').textContent = style.desc_title;
+  document.getElementById('descText').textContent = style.desc;
+
+  // Consequences
+  let consHTML = '';
+  style.consequences.forEach(c => {
+    consHTML += `<div class="con-item ${c.type}">${c.text}</div>`;
+  });
+  document.getElementById('consequencesGrid').innerHTML = consHTML;
+
+  // Show
+  document.getElementById('quizSection').style.display = 'none';
+  const res = document.getElementById('resultSection');
+  res.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restart() {
+  current = 0;
+  answers = new Array(questions.length).fill(null);
+  document.getElementById('quizSection').style.display = 'block';
+  document.getElementById('resultSection').style.display = 'none';
+  renderQ();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+renderQ();
+</script>
+</body>
+</html>
